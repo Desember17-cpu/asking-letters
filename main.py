@@ -7,9 +7,10 @@ The poem text below is final and must not be altered by a single character:
 206 Unicode code points, newlines included, no trailing newline.
 """
 
-import os
+from pathlib import Path
 
-OUTPUT_PATH = "/output/entry.txt"
+OUTPUT_PATH = Path("/output/entry.txt")
+OUTPUT_ENCODING = "utf-8"
 
 POEM = (
     "What I lend you is not lost:\n"
@@ -22,8 +23,9 @@ POEM = (
 
 
 def main() -> None:
-    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    with open(OUTPUT_PATH, "w", encoding="utf-8", newline="") as f:
+    """Write POEM to OUTPUT_PATH byte-exactly (UTF-8, no newline translation)."""
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with OUTPUT_PATH.open("w", encoding=OUTPUT_ENCODING, newline="") as f:
         f.write(POEM)
 
 
